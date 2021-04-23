@@ -4,38 +4,31 @@ section .text
 strcopy:
     mov RCX, RDX
     cmp RSI, RDI
-    jg SGETDIST
-    jmp DGETDIST
+    jle STRAIGHT
 
-    SGETDIST:
-        mov RAX, RSI
-        sub RAX, RDI
+    mov RAX, RDI
+    sub RAX, RSI
 
-    DGETDIST:
-        mov RAX, RDI
-        sub RAX, RSI
-
+STRAIGHT:
     cmp RAX, RCX
     jg REPMOVSB
 
     cmp RSI, RDI
-    jg REPMOVSB
-
-    jmp REVERSE
+    jle REVERSE
 
     REPMOVSB:
         rep movsb
-        jmp ENDCP
+        jmp exit
 
     REVERSE:
         add RDI, RCX
         add RSI, RCX
         dec RSI
         dec RDI
-        CPY:
-            movsb
-            sub RSI, 2
-            sub RDI, 2
-            loop CPY
-    ENDCP:
+
+        std
+        rep movsb
+        cld
+
+    exit:
     ret

@@ -14,7 +14,6 @@ MAIN:
 
 MY_NEW_8H proc
     pusha
-    pushf
     push es
     push ds
 
@@ -42,7 +41,6 @@ MY_NEW_8H proc
         pop ds
         pop es
 
-        popf
         popa
 
         jmp CS:OLD_8H

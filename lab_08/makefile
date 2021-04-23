@@ -7,7 +7,7 @@ UTESTS_DIR := ./unit_tests
 
 CC := gcc
 ASM := nasm
-CFLAGS := -std=gnu99 -w -I$(INC_DIR)
+CFLAGS := -std=gnu99 -w -I$(INC_DIR) -masm=intel
 
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 ASM_SRCS += $(wildcard $(SRC_DIR)/*.asm)

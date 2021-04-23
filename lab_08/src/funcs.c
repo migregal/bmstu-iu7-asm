@@ -1,22 +1,23 @@
 #include "funcs.h"
 
-int asmstrlen(const char *str)
+size_t asmstrlen(const char *str)
 {
-    int len = 0;
+    size_t len = 0;
     const char *str_copy = str;
 
     __asm__(
-        "mov $0xffffffff, %%ecx\n\t"
-        "mov $0, %%al\n\t"
-        "mov %1, %%rdi\n\t"
-        "repne scasb\n\t"
-        "mov $0xffffffff, %%eax\n\t"
-        "dec %%eax\n\t"
-        "sub %%ecx, %%eax\n\t"
-        "mov %%eax, %0"
+        ".intel_syntax noprefix\n"
+        "mov rcx, 0xffffffffffffffff\n"
+        "mov al, 0\n"
+        "mov rdi, %1\n"
+        "repne scasb\n"
+        "mov rax, 0xffffffffffffffff\n"
+        "dec rax\n"
+        "sub rax, rcx\n"
+        "mov %0, rax\n"
         : "=r"(len)
         : "r"(str_copy)
-        : "%eax", "%ecx", "%rdi", "%al");
+        : "%rax", "%rcx", "%rdi", "%al");
 
     return len;
 }

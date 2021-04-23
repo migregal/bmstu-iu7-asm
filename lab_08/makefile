@@ -11,7 +11,7 @@ CFLAGS := -std=gnu99 -w -I$(INC_DIR) -masm=intel
 
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 ASM_SRCS += $(wildcard $(SRC_DIR)/*.asm)
-INCS := $(filter-out $(INC_DIR)/main.h, $(SRCS:$(SRC_DIR)/%.c=$(INC_DIR)/%.h))
+INCS := $(SRCS:$(SRC_DIR)/%.c=$(INC_DIR)/%.h)
 
 U_CFLAGS := -lcheck -lpthread -lrt
 U_SRCS := $(wildcard $(UTESTS_DIR)/*.c)

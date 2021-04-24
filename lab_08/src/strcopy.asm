@@ -10,25 +10,32 @@ strcopy:
     sub RAX, RSI
 
 STRAIGHT:
-    cmp RAX, RCX
-    jg REPMOVSB
+    mov RCX, RDX
 
     cmp RSI, RDI
-    jle REVERSE
+    je exit
+    jl not_equal
 
-    REPMOVSB:
-        rep movsb
-        jmp exit
+not_equal:
+    cmp RSI, RDI
+    jg simple_copy
 
-    REVERSE:
-        add RDI, RCX
-        add RSI, RCX
-        dec RSI
-        dec RDI
+    mov RAX, RDI
+    sub RAX, RSI
 
-        std
-        rep movsb
-        cld
+    cmp RAX, RCX
+    jge simple_copy
+
+    add RDI, RCX
+    add RSI, RCX
+    dec RSI
+    dec RDI
+
+    std
+
+simple_copy:
+    rep movsb
+    cld
 
     exit:
     ret
